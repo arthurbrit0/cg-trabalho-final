@@ -785,7 +785,7 @@ std::vector<Objeto> objetos;
 RenderTexture2D tela;
 bool ortografica = false;
 // Inicializar câmera
-Vetor3d Eye = { 0.0f, 300.0f, 600.0f };   // Elevada, para ver o chão e os objetos sobre ele
+Vetor3d Eye = { 0.0f, 400.0f, 840.0f };   // Elevada, para ver o chão e os objetos sobre ele
 Vetor3d At  = { 0.0f, 0.0f, 0.0f };         // Olha para o centro da cena
 Vetor3d Up  = { 0.0f, 1.0f, 0.0f };
 Camera3de camera(Eye, At, Up);

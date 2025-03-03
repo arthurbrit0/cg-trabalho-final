@@ -201,8 +201,8 @@ CMakeFiles/CG_Creto_work.dir/src/objetosTrabalhofinal.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /home/arthurbrito/ComputerGraphics/src/./Malha/Malha.h \
- /home/arthurbrito/ComputerGraphics/src/./PlanoTextura/PlanoTextura.h \
  /home/arthurbrito/ComputerGraphics/src/inicializar_objetos.h \
  /home/arthurbrito/ComputerGraphics/src/./Objeto/Objeto.h \
- /home/arthurbrito/ComputerGraphics/src/./ObjetoComplexo/ObjetoComplexo.h
+ /home/arthurbrito/ComputerGraphics/src/./ObjetoComplexo/ObjetoComplexo.h \
+ /home/arthurbrito/ComputerGraphics/src/./Malha/Malha.h \
+ /home/arthurbrito/ComputerGraphics/src/./PlanoTextura/PlanoTextura.h

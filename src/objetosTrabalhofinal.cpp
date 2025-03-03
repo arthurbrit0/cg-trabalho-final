@@ -1,282 +1,237 @@
 //
 // Created by Vitor on 01/02/2025.
-// Cena: "Rua Comercial" – Uma cena cotidiana de uma rua urbana com prédios, poste, árvore, banco e abrigo de ônibus
+// Cena: "Rua Comercial Vista de Perfil" – Versão ajustada:
+// - Casas com telhado em cone menor (raio=70, altura=70), sem flutuar
+// - Árvores, postes e mobiliário entre as fileiras de casas, na faixa da rua
+// - Removido o anel suspenso para evitar cones extras flutuando
 //
 
 #include "objetosTrabalhofinal.h"
 #include <cmath>
 #include <iostream>
 #include <raylib.h>
-
+#include "inicializar_objetos.h"
 #include "./Malha/Malha.h"
 #include "./PlanoTextura/PlanoTextura.h"
-#include "inicializar_objetos.h"
 
 void inicializar_objetosfinal(std::vector<Objeto>& objects_flat,
                               std::vector<ObjetoComplexo>& complexObjects)
 {
-  // 1) CHÃO – Usamos a textura de grama para o piso da rua (PlanoTextura)
+  // 1) CHÃO (PlanoTextura)
   {
     Image textura_grama = LoadImage("assets/grama.png");
-    Color* pixels_textura_grama = LoadImageColors(textura_grama);
+    Color* px_grama = LoadImageColors(textura_grama);
     if (!textura_grama.data) {
       std::cerr << "Erro ao carregar textura de grama.\n";
       return;
     }
-    // Mapeia a textura para uma área ampla (1000x1000 unidades)
-    Textura texturaG(pixels_textura_grama,
-                     textura_grama.width,
-                     textura_grama.height,
-                     textura_grama.width,
-                     textura_grama.height,
-                     10.0f);
-    // Posiciona o chão levemente abaixo da origem; a normal calculada é (0,-1,0)
-    PlanoTextura chao({ 0.0f, -5.0f, 0.0f },
-                       { 1.0f, 0.0f, 0.0f },
-                       { 0.0f, 0.0f, 1.0f },
-                       texturaG);
+    // Mapeia ~1000x1000
+    Textura texChao(px_grama,
+                    textura_grama.width,
+                    textura_grama.height,
+                    textura_grama.width,
+                    textura_grama.height,
+                    10.0f);
+
+    PlanoTextura chao({ 0.0f, -5.0f, 0.0f },  // ponto
+                      { 1.0f, 0.0f, 0.0f },  // eixo1
+                      { 0.0f, 0.0f, 1.0f },  // eixo2
+                      texChao);
     objects_flat.push_back(chao);
     std::cout << "Chão de grama inicializado.\n";
   }
 
-  // 2) CÉU – Mantido como fundo (como no arquivo original)
+  // 2) CÉU (PlanoTextura)
   {
     Image textura_ceu = LoadImage("assets/ceu2.png");
-    Color* pixels_textura_ceu = LoadImageColors(textura_ceu);
+    Color* px_ceu = LoadImageColors(textura_ceu);
     if (!textura_ceu.data) {
       std::cerr << "Erro ao carregar textura do céu.\n";
       return;
     }
-    Textura texturaC(pixels_textura_ceu,
-                     textura_ceu.width,
-                     textura_ceu.height,
-                     textura_ceu.width / 0.01f,
-                     textura_ceu.height / 0.01f,
-                     1.0f);
+    Textura texCeu(px_ceu,
+                   textura_ceu.width,
+                   textura_ceu.height,
+                   textura_ceu.width / 0.01f,
+                   textura_ceu.height / 0.01f,
+                   1.0f);
+
     PlanoTextura ceu({ 1000.0f, 250.0f, -20000.0f },
                      { 1.0f, 0.0f, 0.0f },
                      { 0.0f, 1.0f, 0.0f },
-                     texturaC);
+                     texCeu);
     objects_flat.push_back(ceu);
     std::cout << "Céu inicializado.\n";
   }
 
-  // 3) PRÉDIO COMERCIAL – Um prédio simples feito com um cubo (Malha)
+  // 3) RUA (Malha)
   {
-    Malha predioComercial;
-    predioComercial.inicializar_cubo({ 0, 0, 0 },
-                                      1.0f,
-                                      { 0.8f, 0.8f, 0.8f },
-                                      { 0.8f, 0.8f, 0.8f },
-                                      { 0.8f, 0.8f, 0.8f },
-                                      32);
-    // Reposiciona e escala para formar um prédio de 150x300x150 unidades
-    predioComercial.transformar(Matriz::translacao({ 200.0f, 0.0f, 300.0f }) *
-                                Matriz::escala({ 150.0f, 300.0f, 150.0f }));
-    ObjetoComplexo comercial;
-    comercial.adicionar_objeto(predioComercial);
-    complexObjects.push_back(comercial);
-    std::cout << "Prédio comercial inicializado.\n";
+    Malha rua;
+    Vetor3d corRua = { 0.15f, 0.15f, 0.15f };
+    rua.inicializar_cubo({ 0, 0, 0 }, 1.0f,
+                          corRua, corRua, corRua,
+                          32.0f);
+    // Largura 1000 (de x=-500 a x=+500) e comprimento 4000, altura mínima
+    rua.transformar(Matriz::translacao({ 0.0f, 0.0f, 0.0f }) *
+                    Matriz::escala({ 1600.0f, 10.0f, 5000.0f }));
+    objects_flat.push_back(rua);
+    std::cout << "Rua pavimentada inicializada.\n";
   }
 
-  // 4) PRÉDIO RESIDENCIAL – Um prédio com telhado triangular
-  {
-    Malha predioResidencial;
-    predioResidencial.inicializar_cubo({ 0, 0, 0 },
-                                      1.0f,
-                                      { 0.7f, 0.7f, 0.7f },
-                                      { 0.7f, 0.7f, 0.7f },
-                                      { 0.7f, 0.7f, 0.7f },
-                                      32);
-    predioResidencial.transformar(Matriz::translacao({ 600.0f, 0.0f, 300.0f }) *
-                                  Matriz::escala({ 150.0f, 250.0f, 150.0f }));
-    // Telhado em forma de triângulo
-    Triangulo telhado(
-      {525.0f, 250.0f, 375.0f}, {675.0f, 250.0f, 375.0f}, {600.0f, 350.0f, 375.0f},
-      {0.9f, 0.2f, 0.2f}, {0.9f, 0.2f, 0.2f}, {0.1f, 0.1f, 0.1f},
-      32.0f
-    );
-    ObjetoComplexo residencial;
-    residencial.adicionar_objeto(predioResidencial);
-    residencial.adicionar_objeto(telhado);
-    complexObjects.push_back(residencial);
-    std::cout << "Prédio residencial inicializado.\n";
-  }
+  // Função lambda para criar uma casa (cubo + cone de telhado)
+  auto criarCasa = [&](float posX, float posZ, Vetor3d corCorpo, Vetor3d corTelhado) -> ObjetoComplexo {
+    ObjetoComplexo casa;
 
-  // 5) POSTE DE ILUMINAÇÃO – Representado por um cilindro e um cone (lampada)
-  {
+    // Corpo da casa (cubo)
+    Malha corpo;
+    corpo.inicializar_cubo({ 0, 0, 0 }, 1.0f,
+                           corCorpo, corCorpo, corCorpo,
+                           32.0f);
+    // 150(larg) x 250(alt) x 150(prof)
+    corpo.transformar(Matriz::translacao({ posX, 0.0f, posZ }) *
+                      Matriz::escala({ 150.0f, 250.0f, 150.0f }));
+    casa.adicionar_objeto(corpo);
+
+    // Telhado (cone) menor, para não parecer flutuando
+    // Raio=70, Altura=70, base em y=250
+    Cone telhado({ posX, 140.0f, posZ },  // base do cone
+                 120.0f,                   // raio
+                 120.0f,                   // altura
+                 { 0, 1, 0 },             // direcao
+                 corTelhado, corTelhado, { 0.1f, 0.1f, 0.1f },
+                 32.0f);
+    casa.adicionar_objeto(telhado);
+
+    return casa;
+  };
+
+  // 4) CASAS: duas filas, à esquerda (x ~ -700) e à direita (x ~ +700), ao longo do z
+  for (int i = 0; i < 3; i++) {
+    float zPos = -1500.0f + i * 800.0f;
+    // Casa à esquerda
+    ObjetoComplexo casaEsq = criarCasa(-700.0f, zPos, {0.8f, 0.85f, 0.9f}, {0.2f, 0.2f, 0.8f});
+    complexObjects.push_back(casaEsq);
+    // Casa à direita
+    ObjetoComplexo casaDir = criarCasa(700.0f, zPos, {0.95f, 0.9f, 0.8f}, {0.9f, 0.5f, 0.2f});
+    complexObjects.push_back(casaDir);
+  }
+  std::cout << "Casas alinhadas inicializadas.\n";
+
+  // 5) POSTES: dispostos entre as casas e a rua (ex.: x ~ ±300)
+  auto criarPoste = [&](float x, float z) -> ObjetoComplexo {
     ObjetoComplexo poste;
-    Cilindro posteBase(
-      { 100.0f, 0.0f, 800.0f },
-      2.0f,
+    Cilindro base(
+      { x, 0.0f, z },
+      3.0f,
       100.0f,
-      { 0, 1, 0 },
-      { 0.4f, 0.4f, 0.4f },
-      { 0.4f, 0.4f, 0.4f },
-      { 0.1f, 0.1f, 0.1f },
+      { 0,1,0 },
+      { 0.4f,0.4f,0.4f },
+      { 0.4f,0.4f,0.4f },
+      { 0.1f,0.1f,0.1f },
       16.0f
     );
     Cone lampada(
-      { 100.0f, 100.0f, 800.0f },
+      { x, 100.0f, z },
       6.0f,
-      15.0f,
-      { 0, 1, 0 },
-      { 1.0f, 1.0f, 0.8f },
-      { 1.0f, 1.0f, 0.8f },
-      { 0.1f, 0.1f, 0.1f },
+      20.0f,
+      { 0,1,0 },
+      { 1.0f,1.0f,0.9f },
+      { 1.0f,1.0f,0.9f },
+      { 0.1f,0.1f,0.1f },
       32.0f
     );
-    poste.adicionar_objeto(posteBase);
+    poste.adicionar_objeto(base);
     poste.adicionar_objeto(lampada);
-    complexObjects.push_back(poste);
-    std::cout << "Poste de iluminação inicializado.\n";
-  }
+    return poste;
+  };
 
-  // 6) ÁRVORE – Com tronco (cilindro) e copa (cone)
-  {
+  for (int i = 0; i < 5; i++) {
+    float zPos = -1500.0f + i * 600.0f;
+    // Poste à esquerda (x=-300)
+    complexObjects.push_back(criarPoste(-300.0f, zPos));
+    // Poste à direita (x=+300)
+    complexObjects.push_back(criarPoste(300.0f, zPos));
+  }
+  std::cout << "Postes alinhados inicializados.\n";
+
+    // 6) ÁRVORES COM MAÇÃS (x=±400)
+  auto criarArvore = [&](float x, float z) -> ObjetoComplexo {
     ObjetoComplexo arvore;
-    Cilindro tronco(
-      { 400.0f, 0.0f, 800.0f },
-      5.0f,
-      120.0f,
-      { 0, 1, 0 },
-      { 0.5f, 0.3f, 0.1f },
-      { 0.5f, 0.3f, 0.1f },
-      { 0.1f, 0.1f, 0.1f },
-      16.0f
-    );
-    Cone copa(
-      { 400.0f, 120.0f, 800.0f },
-      40.0f,
-      80.0f,
-      { 0, 1, 0 },
-      { 0.0f, 0.6f, 0.0f },
-      { 0.0f, 0.6f, 0.0f },
-      { 0.1f, 0.1f, 0.1f },
-      16.0f
-    );
+    // Tronco
+    Cilindro tronco({ x, 0.0f, z },
+                    5.0f,
+                    120.0f,
+                    { 0,1,0 },
+                    { 0.5f, 0.25f, 0.1f },
+                    { 0.5f, 0.25f, 0.1f },
+                    { 0.1f, 0.1f, 0.1f },
+                    16.0f);
     arvore.adicionar_objeto(tronco);
+
+    // Copa
+    Cone copa({ x, 120.0f, z },
+              70.0f,
+              100.0f,
+              { 0,1,0 },
+              { 0.0f, 0.6f, 0.0f },
+              { 0.0f, 0.6f, 0.0f },
+              { 0.1f, 0.1f, 0.1f },
+              16.0f);
     arvore.adicionar_objeto(copa);
-    complexObjects.push_back(arvore);
-    std::cout << "Árvore inicializada.\n";
-  }
 
-  // 7) BANCO – Um assento urbano composto por um cubo para o assento e dois cilindros como suportes
-  {
-    ObjetoComplexo banco;
-    Malha assento;
-    assento.inicializar_cubo({ 0, 0, 0 },
-                              1.0f,
-                              { 0.4f, 0.2f, 0.1f },
-                              { 0.4f, 0.2f, 0.1f },
-                              { 0.4f, 0.2f, 0.1f },
-                              32.0f);
-    assento.transformar(Matriz::translacao({ 600.0f, 0.0f, 900.0f }) *
-                         Matriz::escala({ 100.0f, 10.0f, 40.0f }));
-    banco.adicionar_objeto(assento);
-    // Suportes
-    Cilindro suporte1(
-      { 550.0f, 0.0f, 900.0f },
-      2.0f,
-      20.0f,
-      { 0,1,0 },
-      { 0.4f,0.4f,0.4f },
-      { 0.4f,0.4f,0.4f },
-      { 0.1f,0.1f,0.1f },
-      16.0f
-    );
-    Cilindro suporte2(
-      { 650.0f, 0.0f, 900.0f },
-      2.0f,
-      20.0f,
-      { 0,1,0 },
-      { 0.4f,0.4f,0.4f },
-      { 0.4f,0.4f,0.4f },
-      { 0.1f,0.1f,0.1f },
-      16.0f
-    );
-    banco.adicionar_objeto(suporte1);
-    banco.adicionar_objeto(suporte2);
-    complexObjects.push_back(banco);
-    std::cout << "Banco inicializado.\n";
-  }
+    // Maçãs – 3 esferas vermelhas, maiores e mais afastadas
+    for (int i = 0; i < 3; i++) {
+      float offsetX = (i - 1) * 20.0f;  // -15, 0, +15
+      float offsetZ = (i == 1) ? 0.0f : (i == 0 ? 20.0f : -20.0f);
+      float offsetY = 180.0f + i * 10.0f; // 150,160,170
 
-  // 8) ABRIGO DE ÔNIBUS – Um pequeno pavilhão para proteção
-  {
-    ObjetoComplexo abrigo;
-    Malha estrutura;
-    estrutura.inicializar_cubo({ 0, 0, 0 },
-                                1.0f,
-                                { 0.8f, 0.8f, 0.8f },
-                                { 0.8f, 0.8f, 0.8f },
-                                { 0.8f, 0.8f, 0.8f },
-                                32.0f);
-    // Base do abrigo
-    estrutura.transformar(Matriz::translacao({ 900.0f, 0.0f, 600.0f }) *
-                          Matriz::escala({ 150.0f, 5.0f, 100.0f }));
-    abrigo.adicionar_objeto(estrutura);
-    // Teto do abrigo
-    Malha teto;
-    teto.inicializar_cubo({ 0, 0, 0 },
-                           1.0f,
-                           { 0.3f, 0.3f, 0.3f },
-                           { 0.3f, 0.3f, 0.3f },
-                           { 0.3f, 0.3f, 0.3f },
-                           32.0f);
-    teto.transformar(Matriz::translacao({ 900.0f, 50.0f, 600.0f }) *
-                     Matriz::escala({ 150.0f, 10.0f, 100.0f }));
-    abrigo.adicionar_objeto(teto);
-    complexObjects.push_back(abrigo);
-    std::cout << "Abrigo de ônibus inicializado.\n";
-  }
+      Esfera maca({ x + offsetX, offsetY, z + offsetZ },
+                  15.0f, // raio maior
+                  { 1.0f, 0.0f, 0.0f }, // vermelho
+                  { 1.0f, 1.0f, 1.0f },
+                  { 0.1f, 0.1f, 0.1f },
+                  16.0f);
+      arvore.adicionar_objeto(maca);
+    }
+    return arvore;
+  };
 
-  // 9) SINAL DE RUA – Um cone representando uma placa de sinalização
-  {
-    ObjetoComplexo sinal;
-    Cone placa(
-      { 750.0f, 80.0f, 800.0f },
-      10.0f,
-      30.0f,
-      { 0,1,0 },
-      { 1.0f,0.8f,0.0f },
-      { 1.0f,0.8f,0.0f },
-      { 0.1f,0.1f,0.1f },
-      32.0f
-    );
-    sinal.adicionar_objeto(placa);
-    complexObjects.push_back(sinal);
-    std::cout << "Sinal de rua inicializado.\n";
-  }
 
-  // 10) ANEL SUSPENSO – Uma peça de arte cinética reinterpretada a partir da cesta de basquete
+  for (int i = 0; i < 5; i++) {
+    float zPos = -1300.0f + i * 500.0f;
+    // Árvores à esquerda (x=-400) e direita (x=+400)
+    complexObjects.push_back(criarArvore(-400.0f, zPos));
+    complexObjects.push_back(criarArvore( 400.0f, zPos));
+  }
+  std::cout << "Árvores alinhadas inicializadas.\n";
+  std::cout << "\nCena 'Rua Comercial Vista de Perfil' ajustada com sucesso!\n";
+
+ // 10) Faixa amarela tracejada no centro da rua
   {
-    auto criarAnel = [&](float x, float z) -> ObjetoComplexo {
-      ObjetoComplexo anel;
-      Cilindro aro1({ x, 0.0f, z },
-                    30.0f,
-                    10.0f,
-                    { 0,1,0 },
-                    { 1.0f,0.5f,0.0f },
-                    { 1.0f,0.5f,0.0f },
-                    { 0.2f,0.1f,0.0f },
-                    16.0f);
-      Cilindro aro2({ x, 0.0f, z },
-                    30.0f,
-                    10.0f,
-                    { 0,1,0 },
-                    { 1.0f,0.5f,0.0f },
-                    { 1.0f,0.5f,0.0f },
-                    { 0.2f,0.1f,0.0f },
-                    16.0f);
-      anel.adicionar_objeto(aro1);
-      anel.adicionar_objeto(aro2);
-      return anel;
+    // Função lambda para criar um retângulo amarelo (Malha) representando um traço
+    auto criarTraco = [&](float z) -> ObjetoComplexo {
+      ObjetoComplexo traco;
+      Malha dash;
+      dash.inicializar_cubo({ 0, 0, 0 }, 1.0f,
+                            { 1.0f, 1.0f, 0.0f }, // amarelo
+                            { 1.0f, 1.0f, 0.0f },
+                            { 1.0f, 1.0f, 0.0f },
+                            32.0f);
+      // Cada traço: 50 de comprimento no eixo z, 5 de largura no eixo x, 1 de altura
+      dash.transformar(Matriz::translacao({ 0.0f, 5.5f, z }) *
+                       Matriz::escala({ 50.0f, 1.0f, 120.0f }));
+      traco.adicionar_objeto(dash);
+      return traco;
     };
-    ObjetoComplexo anelSuspenso = criarAnel(650.0f, 700.0f);
-    anelSuspenso.transformar(Matriz::translacao({ 0.0f, 100.0f, 0.0f }));
-    complexObjects.push_back(anelSuspenso);
-    std::cout << "Anel suspenso inicializado.\n";
+
+    // Cria ~10 traços distribuídos ao longo do z
+    for (int i = 0; i < 10; i++) {
+      float zPos = -2000.0f + i * 400.0f;
+      complexObjects.push_back(criarTraco(zPos));
+    }
+    std::cout << "Faixa amarela tracejada adicionada ao centro da rua.\n";
   }
 
-  std::cout << "\nCena 'Rua Comercial' inicializada com sucesso!\n";
 }
+
+
