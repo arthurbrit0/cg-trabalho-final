@@ -41,9 +41,9 @@ main()
   SetTargetFPS(60);
 
   // Inicializar câmera
-  Vetor3d Eye = { 150.0f, 125.0f, 800.0f };
-  Vetor3d At = { 300.0f, 125.0f, 500.0f };
-  Vetor3d Up = { 300.0f, 325.0f, 500.0f };
+  Vetor3d Eye = { 0.0f, 60.0f, 200.0f };
+  Vetor3d At = { 0.0f, 0.0f, 0.0f };
+  Vetor3d Up = { 0.0f, 100.0f, 200.0f };
   Camera3de camera(Eye, At, Up);
   Matriz M_wc = camera.getTransformationMatrix();
 

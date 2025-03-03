@@ -29,7 +29,7 @@ Image textura_grama = LoadImage("assets/grama.png");
   objects_flat.push_back(plano_grama);
   std::cout << "Inicializou plano da grama.\n";
 
-  Image textura_ceu = LoadImage("../assets/ceu.png");
+  Image textura_ceu = LoadImage("assets/ceu.png");
   Color* pixels_textura_ceu = LoadImageColors(textura_ceu);
   if (!textura_ceu.data) {
     std::cerr << "Erro ao carregar textura do céu.\n";

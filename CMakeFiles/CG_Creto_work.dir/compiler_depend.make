@@ -1945,11 +1945,10 @@ CMakeFiles/CG_Creto_work.dir/src/objetosTrabalhofinal.cpp.o: src/objetosTrabalho
   src/Triangulo/Triangulo.h \
   _deps/raylib-src/src/raylib.h \
   funcoes_auxiliares.h \
-  src/Cilindro/Cilindro.h \
-  src/Circulo/Circulo.h \
-  src/Cone/Cone.h \
-  src/Esfera/Esfera.h \
   src/Malha/Malha.h \
+  src/Objeto/Objeto.h \
+  src/ObjetoComplexo/ObjetoComplexo.h \
+  src/PlanoTextura/PlanoTextura.h \
   src/Cilindro/Cilindro.h \
   src/Circulo/Circulo.h \
   src/Cone/Cone.h \
@@ -1963,8 +1962,8 @@ CMakeFiles/CG_Creto_work.dir/src/objetosTrabalhofinal.cpp.o: src/objetosTrabalho
   src/Objeto/Objeto.h \
   src/Objeto/Objeto.h \
   src/ObjetoComplexo/ObjetoComplexo.h \
-  src/PlanoTextura/PlanoTextura.h \
   src/inicializar_objetos.h \
+  src/objetosTrabalhofinal.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -1981,7 +1980,6 @@ CMakeFiles/CG_Creto_work.dir/src/objetosTrabalhofinal.cpp.o: src/objetosTrabalho
   /usr/include/c++/11/bits/cpp_type_traits.h \
   /usr/include/c++/11/bits/cxxabi_forced.h \
   /usr/include/c++/11/bits/cxxabi_init_exception.h \
-  /usr/include/c++/11/bits/deque.tcc \
   /usr/include/c++/11/bits/enable_special_members.h \
   /usr/include/c++/11/bits/exception.h \
   /usr/include/c++/11/bits/exception_defines.h \
@@ -2012,21 +2010,18 @@ CMakeFiles/CG_Creto_work.dir/src/objetosTrabalhofinal.cpp.o: src/objetosTrabalho
   /usr/include/c++/11/bits/stl_algobase.h \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/stl_construct.h \
-  /usr/include/c++/11/bits/stl_deque.h \
   /usr/include/c++/11/bits/stl_function.h \
   /usr/include/c++/11/bits/stl_iterator.h \
   /usr/include/c++/11/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/11/bits/stl_iterator_base_types.h \
   /usr/include/c++/11/bits/stl_pair.h \
   /usr/include/c++/11/bits/stl_relops.h \
-  /usr/include/c++/11/bits/stl_stack.h \
   /usr/include/c++/11/bits/stl_uninitialized.h \
   /usr/include/c++/11/bits/stl_vector.h \
   /usr/include/c++/11/bits/streambuf.tcc \
   /usr/include/c++/11/bits/streambuf_iterator.h \
   /usr/include/c++/11/bits/string_view.tcc \
   /usr/include/c++/11/bits/stringfwd.h \
-  /usr/include/c++/11/bits/uses_allocator.h \
   /usr/include/c++/11/bits/vector.tcc \
   /usr/include/c++/11/cctype \
   /usr/include/c++/11/cerrno \
@@ -2040,7 +2035,6 @@ CMakeFiles/CG_Creto_work.dir/src/objetosTrabalhofinal.cpp.o: src/objetosTrabalho
   /usr/include/c++/11/cwctype \
   /usr/include/c++/11/debug/assertions.h \
   /usr/include/c++/11/debug/debug.h \
-  /usr/include/c++/11/deque \
   /usr/include/c++/11/exception \
   /usr/include/c++/11/ext/aligned_buffer.h \
   /usr/include/c++/11/ext/alloc_traits.h \
@@ -2058,7 +2052,6 @@ CMakeFiles/CG_Creto_work.dir/src/objetosTrabalhofinal.cpp.o: src/objetosTrabalho
   /usr/include/c++/11/new \
   /usr/include/c++/11/ostream \
   /usr/include/c++/11/pstl/pstl_config.h \
-  /usr/include/c++/11/stack \
   /usr/include/c++/11/stdexcept \
   /usr/include/c++/11/streambuf \
   /usr/include/c++/11/string \
