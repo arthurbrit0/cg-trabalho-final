@@ -1,8 +1,8 @@
 CMakeFiles/CG_Creto_work.dir/src/Plano/Plano.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Plano/Plano.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Plano/Plano.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Plano/Plano.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Plano/Plano.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h \
  /usr/include/c++/11/math.h /usr/include/c++/11/cmath \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

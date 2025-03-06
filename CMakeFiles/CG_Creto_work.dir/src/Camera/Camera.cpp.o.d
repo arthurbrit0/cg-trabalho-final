@@ -1,5 +1,5 @@
 CMakeFiles/CG_Creto_work.dir/src/Camera/Camera.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Camera/Camera.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Camera/Camera.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Camera/Camera3de.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Camera/Camera3de.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h

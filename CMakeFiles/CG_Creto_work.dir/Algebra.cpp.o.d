@@ -1,7 +1,7 @@
 CMakeFiles/CG_Creto_work.dir/Algebra.cpp.o: \
- /home/arthurbrito/ComputerGraphics/Algebra.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/Algebra.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h \
  /usr/include/c++/11/cassert \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

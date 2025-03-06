@@ -1,5 +1,5 @@
 CMakeFiles/CG_Creto_work.dir/src/Ponto/Ponto.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Ponto/Ponto.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Ponto/Ponto.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/math.h \
  /usr/include/c++/11/cmath \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -85,4 +85,4 @@ CMakeFiles/CG_Creto_work.dir/src/Ponto/Ponto.cpp.o: \
  /usr/include/c++/11/tr1/poly_hermite.tcc \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc \
- /home/arthurbrito/ComputerGraphics/src/Ponto/Ponto.h
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Ponto/Ponto.h

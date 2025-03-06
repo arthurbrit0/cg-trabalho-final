@@ -1,5 +1,5 @@
 CMakeFiles/CG_Creto_work.dir/src/Circulo/Circulo.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Circulo/Circulo.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Circulo/Circulo.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Circulo/Circulo.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Circulo/Circulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h

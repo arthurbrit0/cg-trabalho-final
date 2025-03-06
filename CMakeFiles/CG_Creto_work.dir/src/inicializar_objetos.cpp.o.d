@@ -1,5 +1,5 @@
 CMakeFiles/CG_Creto_work.dir/src/inicializar_objetos.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/inicializar_objetos.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/inicializar_objetos.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -145,8 +145,7 @@ CMakeFiles/CG_Creto_work.dir/src/inicializar_objetos.cpp.o: \
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
- /usr/include/c++/11/bits/istream.tcc \
- /home/arthurbrito/ComputerGraphics/_deps/raylib-src/src/raylib.h \
+ /usr/include/c++/11/bits/istream.tcc /usr/local/include/raylib.h \
  /usr/include/c++/11/stack /usr/include/c++/11/deque \
  /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
@@ -175,34 +174,34 @@ CMakeFiles/CG_Creto_work.dir/src/inicializar_objetos.cpp.o: \
  /usr/include/c++/11/tr1/poly_hermite.tcc \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc \
- /home/arthurbrito/ComputerGraphics/src/inicializar_objetos.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/inicializar_objetos.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/Objeto.h \
- /home/arthurbrito/ComputerGraphics/./src/Material/Material.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/Objeto.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Material/Material.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h \
  /usr/include/c++/11/variant /usr/include/c++/11/utility \
  /usr/include/c++/11/bits/stl_relops.h \
  /usr/include/c++/11/bits/enable_special_members.h \
  /usr/include/c++/11/bits/invoke.h \
  /usr/include/c++/11/ext/aligned_buffer.h \
  /usr/include/c++/11/bits/parse_numbers.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../Cilindro/Cilindro.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../Circulo/Circulo.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../Cone/Cone.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../Esfera/Esfera.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../Malha/Malha.h \
- /home/arthurbrito/ComputerGraphics/./funcoes_auxiliares.h \
- /home/arthurbrito/ComputerGraphics/./src/Aresta/Aresta.h \
- /home/arthurbrito/ComputerGraphics/./src/Triangulo/Triangulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../Cilindro/Cilindro.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../Circulo/Circulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../Cone/Cone.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../Esfera/Esfera.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../Malha/Malha.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Aresta/Aresta.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Triangulo/Triangulo.h \
  /usr/include/c++/11/cstddef \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../Plano/Plano.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../PlanoTextura/PlanoTextura.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../PlanoTextura/./../Material/Material.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../PlanoTextura/./../Textura/Textura.h \
- /home/arthurbrito/ComputerGraphics/src/./Objeto/./../Triangulo/Triangulo.h \
- /home/arthurbrito/ComputerGraphics/src/./ObjetoComplexo/ObjetoComplexo.h \
- /home/arthurbrito/ComputerGraphics/src/./ObjetoComplexo/../Objeto/Objeto.h \
- /home/arthurbrito/ComputerGraphics/src/./PlanoTextura/PlanoTextura.h \
- /home/arthurbrito/ComputerGraphics/src/./Malha/Malha.h
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../Plano/Plano.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../PlanoTextura/PlanoTextura.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../PlanoTextura/./../Material/Material.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../PlanoTextura/./../Textura/Textura.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Objeto/./../Triangulo/Triangulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./ObjetoComplexo/ObjetoComplexo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./ObjetoComplexo/../Objeto/Objeto.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./PlanoTextura/PlanoTextura.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/./Malha/Malha.h

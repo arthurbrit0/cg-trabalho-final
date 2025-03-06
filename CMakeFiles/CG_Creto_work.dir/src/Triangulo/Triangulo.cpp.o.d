@@ -1,5 +1,5 @@
 CMakeFiles/CG_Creto_work.dir/src/Triangulo/Triangulo.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Triangulo/Triangulo.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Triangulo/Triangulo.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Triangulo/Triangulo.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Triangulo/Triangulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h

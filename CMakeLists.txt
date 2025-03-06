@@ -63,9 +63,9 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib OpenMP::OpenMP_CXX -lgomp)
 
 
-if (${PLATFORM} STREQUAL "Web")
-    set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
-endif()
+#if (${PLATFORM} STREQUAL "Web")
+#    set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
+#endif()
 
 # Configurações para MacOS
 if (APPLE)

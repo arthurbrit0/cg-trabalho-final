@@ -1,18 +1,18 @@
 CMakeFiles/CG_Creto_work.dir/src/Iluminacao/Iluminacao.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Iluminacao/Iluminacao.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Iluminacao/Iluminacao.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Iluminacao/Iluminacao.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/Raio.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Cilindro/Cilindro.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Circulo/Circulo.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Cone/Cone.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Esfera/Esfera.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Malha/Malha.h \
- /home/arthurbrito/ComputerGraphics/./funcoes_auxiliares.h \
- /home/arthurbrito/ComputerGraphics/./src/Aresta/Aresta.h \
- /home/arthurbrito/ComputerGraphics/./src/Material/Material.h \
- /home/arthurbrito/ComputerGraphics/./src/Triangulo/Triangulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Iluminacao/Iluminacao.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/Raio.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Cilindro/Cilindro.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Circulo/Circulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Cone/Cone.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Esfera/Esfera.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Malha/Malha.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Aresta/Aresta.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Material/Material.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Triangulo/Triangulo.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -56,28 +56,28 @@ CMakeFiles/CG_Creto_work.dir/src/Iluminacao/Iluminacao.cpp.o: \
  /usr/include/c++/11/bits/range_access.h \
  /usr/include/c++/11/bits/vector.tcc /usr/include/c++/11/cstddef \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/Objeto.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/Objeto.h \
  /usr/include/c++/11/variant /usr/include/c++/11/utility \
  /usr/include/c++/11/bits/stl_relops.h \
  /usr/include/c++/11/bits/enable_special_members.h \
  /usr/include/c++/11/bits/invoke.h \
  /usr/include/c++/11/ext/aligned_buffer.h \
  /usr/include/c++/11/bits/parse_numbers.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../Cilindro/Cilindro.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../Circulo/Circulo.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../Cone/Cone.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../Esfera/Esfera.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../Malha/Malha.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../Plano/Plano.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../PlanoTextura/PlanoTextura.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../PlanoTextura/./../Material/Material.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../PlanoTextura/./../Textura/Textura.h \
- /home/arthurbrito/ComputerGraphics/_deps/raylib-src/src/raylib.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../Cilindro/Cilindro.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../Circulo/Circulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../Cone/Cone.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../Esfera/Esfera.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../Malha/Malha.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../Plano/Plano.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../PlanoTextura/PlanoTextura.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../PlanoTextura/./../Material/Material.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../PlanoTextura/./../Textura/Textura.h \
+ /usr/local/include/raylib.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Objeto/./../Triangulo/Triangulo.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Plano/Plano.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../PlanoTextura/PlanoTextura.h \
- /home/arthurbrito/ComputerGraphics/./src/Raio/./../Triangulo/Triangulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Objeto/./../Triangulo/Triangulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Plano/Plano.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../PlanoTextura/PlanoTextura.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Raio/./../Triangulo/Triangulo.h \
  /usr/include/c++/11/math.h /usr/include/c++/11/cmath /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \

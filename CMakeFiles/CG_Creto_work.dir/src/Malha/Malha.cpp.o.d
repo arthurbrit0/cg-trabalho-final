@@ -1,12 +1,12 @@
 CMakeFiles/CG_Creto_work.dir/src/Malha/Malha.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Malha/Malha.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Malha/Malha.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Malha/Malha.h \
- /home/arthurbrito/ComputerGraphics/./funcoes_auxiliares.h \
- /home/arthurbrito/ComputerGraphics/./src/Aresta/Aresta.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h \
- /home/arthurbrito/ComputerGraphics/./src/Material/Material.h \
- /home/arthurbrito/ComputerGraphics/./src/Triangulo/Triangulo.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Malha/Malha.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Aresta/Aresta.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Material/Material.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/./src/Triangulo/Triangulo.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

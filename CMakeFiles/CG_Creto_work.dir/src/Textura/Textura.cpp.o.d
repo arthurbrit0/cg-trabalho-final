@@ -1,8 +1,8 @@
 CMakeFiles/CG_Creto_work.dir/src/Textura/Textura.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Textura/Textura.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Textura/Textura.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Textura/Textura.h \
- /home/arthurbrito/ComputerGraphics/_deps/raylib-src/src/raylib.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Textura/Textura.h \
+ /usr/local/include/raylib.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
  /usr/include/c++/11/math.h /usr/include/c++/11/cmath \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \

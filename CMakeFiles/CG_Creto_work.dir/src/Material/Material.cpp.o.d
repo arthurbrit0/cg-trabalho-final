@@ -1,5 +1,5 @@
 CMakeFiles/CG_Creto_work.dir/src/Material/Material.cpp.o: \
- /home/arthurbrito/ComputerGraphics/src/Material/Material.cpp \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Material/Material.cpp \
  /usr/include/stdc-predef.h \
- /home/arthurbrito/ComputerGraphics/src/Material/Material.h \
- /home/arthurbrito/ComputerGraphics/funcoes_auxiliares.h
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/src/Material/Material.h \
+ /mnt/c/Users/caioa/Faculdade/CG/trabalho-final/cg-trabalho-final/funcoes_auxiliares.h
