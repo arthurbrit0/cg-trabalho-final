@@ -205,6 +205,523 @@ struct Switch
   float height() { return rect.height; }
 };
 
+struct Tab
+{
+  std::string label;
+  std::vector<TextBox> textboxes;
+  std::vector<Button> buttons;
+  std::vector<Switch> switches;
+  std::function<void()> renderizar;
+
+  float left;
+  float top;
+  float lower_limit;
+  float bottom;
+  float scroll;
+
+  int select_textbox = -1;
+
+  Tab(float left,
+      float top,
+      float lower_limit,
+      std::function<void()> renderizar)
+      : left(left), bottom(top), top(top), lower_limit(lower_limit), scroll(lower_limit), renderizar(renderizar)
+  {
+  }
+
+  void scroll_down()
+  {
+    scroll += SCROLL_AMOUNT;
+    if (scroll > bottom)
+    {
+      scroll -= SCROLL_AMOUNT;
+      return;
+    }
+
+    for (TextBox &textbox : textboxes)
+    {
+      textbox.move({textbox.rect.x, textbox.rect.y - SCROLL_AMOUNT});
+    }
+
+    for (Button &button : buttons)
+    {
+      button.move({button.rect.x, button.rect.y - SCROLL_AMOUNT});
+    }
+
+    for (Switch &switch_ : switches)
+    {
+      switch_.move({switch_.rect.x, switch_.rect.y - SCROLL_AMOUNT});
+    }
+  }
+
+  void scroll_up()
+  {
+    scroll -= SCROLL_AMOUNT;
+    if (scroll < lower_limit)
+    {
+      scroll += SCROLL_AMOUNT;
+      return;
+    }
+
+    for (TextBox &textbox : textboxes)
+    {
+      textbox.move({textbox.rect.x, textbox.rect.y + SCROLL_AMOUNT});
+    }
+
+    for (Button &button : buttons)
+    {
+      button.move({button.rect.x, button.rect.y + SCROLL_AMOUNT});
+    }
+
+    for (Switch &switch_ : switches)
+    {
+      switch_.move({switch_.rect.x, switch_.rect.y + SCROLL_AMOUNT});
+    }
+  }
+
+  void add_element(TextBox &textbox)
+  {
+    textbox.move({left, bottom});
+    bottom += textbox.height() + ELEMENT_MARGIN;
+    textboxes.push_back(textbox);
+  }
+
+  void add_element(Button &button)
+  {
+    button.move({left, bottom});
+    bottom += button.height() + ELEMENT_MARGIN;
+    buttons.push_back(button);
+  }
+
+  void add_element(Switch &switch_)
+  {
+    switch_.move({left, bottom});
+    bottom += switch_.height() + ELEMENT_MARGIN;
+    switches.push_back(switch_);
+  }
+
+  void desenhar(Font font)
+  {
+    for (auto &element : textboxes)
+    {
+      element.desenhar(font);
+    }
+    for (auto &element : buttons)
+    {
+      element.desenhar(font);
+    }
+    for (auto &element : switches)
+    {
+      element.desenhar(font);
+    }
+  }
+
+  void intersecao(Vector2 mouse)
+  {
+    select_textbox = -1;
+    for (int i = 0; i < textboxes.size(); ++i)
+    {
+      TextBox &textbox = textboxes[i];
+      if (textbox.intersecao(mouse))
+      {
+        select_textbox = i;
+        return;
+      }
+    }
+    for (int i = 0; i < buttons.size(); ++i)
+    {
+      Button &button = buttons[i];
+      if (button.intersecao(mouse))
+      {
+        button.action();
+        renderizar();
+        return;
+      }
+    }
+    for (int i = 0; i < switches.size(); ++i)
+    {
+      Switch &switch_ = switches[i];
+      if (switch_.intersecao(mouse))
+      {
+        switch_.atualizar_parametro();
+        renderizar();
+        return;
+      }
+    }
+  }
+
+  void receber_input(int key, char key_char)
+  {
+    if (select_textbox >= 0)
+    {
+      textboxes[select_textbox].atualizar(key, key_char);
+    }
+  }
+
+  void add_vector_controls(Vetor3d *ponto, std::string label)
+  {
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    TextBox x_box(TextFormat("%s.x", label.c_str()), rect, &ponto->x);
+    TextBox y_box(TextFormat("%s.y", label.c_str()), rect, &ponto->y);
+    TextBox z_box(TextFormat("%s.z", label.c_str()), rect, &ponto->z);
+    add_element(x_box);
+    add_element(y_box);
+    add_element(z_box);
+  }
+
+  void add_color_controls(Vetor3d *color, std::string label)
+  {
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    TextBox r_box(TextFormat("%s.r", label.c_str()), rect, &color->x);
+    TextBox g_box(TextFormat("%s.g", label.c_str()), rect, &color->y);
+    TextBox b_box(TextFormat("%s.b", label.c_str()), rect, &color->z);
+    add_element(r_box);
+    add_element(g_box);
+    add_element(b_box);
+  }
+
+  void add_material_controls(MaterialSimples *material, std::string label)
+  {
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    add_color_controls(&material->K_d, TextFormat("%s.K_d", label.c_str()));
+    add_color_controls(&material->K_e, TextFormat("%s.K_e", label.c_str()));
+    add_color_controls(&material->K_a, TextFormat("%s.K_a", label.c_str()));
+    TextBox m_box(TextFormat("%s.m", label.c_str()), rect, &material->m);
+    add_element(m_box);
+  }
+
+  void add_object_controls(Objeto *objeto, std::string label)
+  {
+    Rectangle switch_rect = {0.0f, 0.0f, 30.0f, 20.0f};
+    Switch visivel_switch("Visivel", switch_rect, &objeto->visivel);
+    add_element(visivel_switch);
+  }
+
+  void add_object_controls(Plano *plano, std::string label)
+  {
+    add_vector_controls(&plano->normal, TextFormat("%s.normal", label.c_str()));
+    add_vector_controls(&plano->ponto, TextFormat("%s.ponto", label.c_str()));
+  }
+
+  void add_object_controls(Esfera *esfera, std::string label)
+  {
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    Rectangle btn_rect = {0.0f, 0.0f, 260.0f, 30.0f};
+    add_vector_controls(&esfera->centro,
+                        TextFormat("%s.centro", label.c_str()));
+    TextBox radius_box(
+        TextFormat("%s.raio", label.c_str()), rect, &esfera->raio);
+    add_element(radius_box);
+  }
+
+  void add_object_controls(Cilindro *cilindro, std::string label)
+  {
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    Rectangle btn_rect = {0.0f, 0.0f, 260.0f, 30.0f};
+    add_vector_controls(&cilindro->centro,
+                        TextFormat("%s.centro", label.c_str()));
+    TextBox radius_box(
+        TextFormat("%s.raio", label.c_str()), rect, &cilindro->raio);
+    add_element(radius_box);
+    TextBox height_box(
+        TextFormat("%s.altura", label.c_str()), rect, &cilindro->altura);
+    add_element(height_box);
+    add_vector_controls(&cilindro->direcao,
+                        TextFormat("%s.direcao", label.c_str()));
+  }
+
+  void add_object_controls(Cone *cone, std::string label)
+  {
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    Rectangle btn_rect = {0.0f, 0.0f, 260.0f, 30.0f};
+    add_vector_controls(&cone->centro, TextFormat("%s.centro", label.c_str()));
+    TextBox radius_box(TextFormat("%s.raio", label.c_str()), rect, &cone->raio);
+    add_element(radius_box);
+    TextBox height_box(
+        TextFormat("%s.altura", label.c_str()), rect, &cone->altura);
+    add_element(height_box);
+    add_vector_controls(&cone->direcao,
+                        TextFormat("%s.direcao", label.c_str()));
+  }
+
+  void add_object_controls(Circulo *circulo, std::string label)
+  {
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    add_vector_controls(&circulo->centro,
+                        TextFormat("%s.centro", label.c_str()));
+    TextBox radius_box(
+        TextFormat("%s.raio", label.c_str()), rect, &circulo->raio);
+    add_element(radius_box);
+    add_vector_controls(&circulo->normal,
+                        TextFormat("%s.normal", label.c_str()));
+  }
+
+  void add_object_controls(Triangulo *triangulo, std::string label) {}
+
+  void add_object_controls(PlanoTextura *plano_textura, std::string label)
+  {
+    add_vector_controls(&plano_textura->normal,
+                        TextFormat("%s.normal", label.c_str()));
+    add_vector_controls(&plano_textura->ponto,
+                        TextFormat("%s.ponto", label.c_str()));
+  }
+
+  void add_object_controls(Malha *malha, std::string label)
+  {
+    add_vector_controls(&malha->ancora,
+                        TextFormat("%s.ancora", label.c_str()));
+  }
+
+  void add_camera_controls(Camera3de *camera, std::string label)
+  {
+    add_vector_controls(&camera->position,
+                        TextFormat("%s.position", label.c_str()));
+    add_vector_controls(&camera->lookAt,
+                        TextFormat("%s.lookAt", label.c_str()));
+    add_vector_controls(&camera->Up, TextFormat("%s.Up", label.c_str()));
+    TextBox d_box(TextFormat("%s.d", label.c_str()),
+                  {0.0f, 0.0f, 260.0f, 20.0f},
+                  &camera->d);
+    TextBox xmin_box(TextFormat("%s.x_min", label.c_str()),
+                     {0.0f, 0.0f, 260.0f, 20.0f},
+                     &camera->xmin);
+    TextBox ymin_box(TextFormat("%s.y_min", label.c_str()),
+                     {0.0f, 0.0f, 260.0f, 20.0f},
+                     &camera->ymin);
+    TextBox xmax_box(TextFormat("%s.x_max", label.c_str()),
+                     {0.0f, 0.0f, 260.0f, 20.0f},
+                     &camera->xmax);
+    TextBox ymax_box(TextFormat("%s.y_max", label.c_str()),
+                     {0.0f, 0.0f, 260.0f, 20.0f},
+                     &camera->ymax);
+    add_element(d_box);
+    add_element(xmin_box);
+    add_element(ymin_box);
+    add_element(xmax_box);
+    add_element(ymax_box);
+    for (TextBox &textbox : textboxes)
+      textbox.atualizar_texto();
+  }
+
+  void add_light_controls(iluminacao::FontePontual *fonte, std::string label)
+  {
+    Rectangle switch_rect = {0.0f, 0.0f, 30.0f, 20.0f};
+    Rectangle btn_rect = {0.0f, 0.0f, 260.0f, 30.0f};
+    add_vector_controls(&fonte->posicao,
+                        TextFormat("%s.posicao", label.c_str()));
+    add_vector_controls(&fonte->intensidade,
+                        TextFormat("%s.intensidade", label.c_str()));
+    for (TextBox &textbox : textboxes)
+      textbox.atualizar_texto();
+    Button atualizar_btn("Atualizar", btn_rect, [this]
+                         {
+      for (TextBox& textbox : this->textboxes)
+        textbox.atualizar_parametro(); });
+    add_element(atualizar_btn);
+    Switch acesa_switch("Acesa", switch_rect, &fonte->acesa);
+    add_element(acesa_switch);
+  }
+  void add_light_controls(iluminacao::FonteDirecional *fonte, std::string label)
+  {
+    Rectangle switch_rect = {0.0f, 0.0f, 30.0f, 20.0f};
+    Rectangle btn_rect = {0.0f, 0.0f, 260.0f, 30.0f};
+    add_vector_controls(&fonte->direcao,
+                        TextFormat("%s.direcao", label.c_str()));
+    add_vector_controls(&fonte->intensidade,
+                        TextFormat("%s.intensidade", label.c_str()));
+    for (TextBox &textbox : textboxes)
+      textbox.atualizar_texto();
+    Button atualizar_btn("Atualizar", btn_rect, [this]
+                         {
+      for (TextBox& textbox : this->textboxes)
+        textbox.atualizar_parametro(); });
+    add_element(atualizar_btn);
+    Switch acesa_switch("Acesa", switch_rect, &fonte->acesa);
+    add_element(acesa_switch);
+  }
+  void add_light_controls(iluminacao::FonteSpot *fonte, std::string label)
+  {
+    Rectangle switch_rect = {0.0f, 0.0f, 30.0f, 20.0f};
+    Rectangle btn_rect = {0.0f, 0.0f, 260.0f, 30.0f};
+    Rectangle rect = {0.0f, 0.0f, 260.0f, 20.0f};
+    add_vector_controls(&fonte->posicao,
+                        TextFormat("%s.posicao", label.c_str()));
+    add_vector_controls(&fonte->intensidade,
+                        TextFormat("%s.intensidade", label.c_str()));
+    add_vector_controls(&fonte->direcao,
+                        TextFormat("%s.direcao", label.c_str()));
+    TextBox angle_box(
+        TextFormat("%s.cos_beta", label.c_str()), rect, &fonte->cos_beta);
+    add_element(angle_box);
+    for (TextBox &textbox : textboxes)
+      textbox.atualizar_texto();
+    Button atualizar_btn("Atualizar", btn_rect, [this]
+                         {
+      for (TextBox& textbox : this->textboxes)
+        textbox.atualizar_parametro(); });
+    add_element(atualizar_btn);
+    Switch acesa_switch("Acesa", switch_rect, &fonte->acesa);
+    add_element(acesa_switch);
+  }
+};
+
+struct TabbedPanel
+{
+  std::vector<Tab> tabs;
+  std::vector<std::string> labels;
+  int selected_tab = -1;
+  Rectangle rect;
+  float scroll;
+  float right_limit;
+  float right = 0.0f;
+  Font font;
+  std::function<void()> renderizar;
+
+  TabbedPanel(Rectangle rect, Font font, std::function<void()> renderizar)
+      : rect(rect), scroll(rect.width), right_limit(rect.width), font(font), renderizar(renderizar)
+  {
+  }
+
+  void scroll_up()
+  {
+    if (selected_tab >= 0)
+      tabs[selected_tab].scroll_up();
+  }
+
+  void scroll_down()
+  {
+    if (selected_tab >= 0)
+      tabs[selected_tab].scroll_down();
+  }
+
+  void scroll_tabs_right()
+  {
+    scroll += TAB_SCROLL_AMOUNT;
+    if (scroll > right)
+    {
+      scroll -= TAB_SCROLL_AMOUNT;
+    }
+  }
+
+  void scroll_tabs_left()
+  {
+    scroll -= TAB_SCROLL_AMOUNT;
+    if (scroll < right_limit)
+    {
+      scroll += TAB_SCROLL_AMOUNT;
+    }
+  }
+
+  void desenhar()
+  {
+    if (selected_tab >= 0)
+      tabs[selected_tab].desenhar(font);
+    DrawRectangleRec({rect.x, rect.y, rect.width, TAB_LABEL_HEIGHT},
+                     BACKGROUND_COLOR);
+    float left = rect.x - scroll + rect.width;
+    float tab_fontsize = TAB_LABEL_HEIGHT - 2.0f * TAB_LABEL_PADDING;
+    for (int i = 0; i < labels.size(); ++i)
+    {
+      std::string &label = labels[i];
+      Vector2 text_size =
+          MeasureTextEx(font, label.c_str(), tab_fontsize, 3.0f);
+      if (selected_tab != i)
+      {
+        DrawRectangleRec({left,
+                          rect.y,
+                          text_size.x + 2.0f * TAB_LABEL_PADDING,
+                          TAB_LABEL_HEIGHT},
+                         TAB_UNSELECTED_COLOR);
+      }
+      DrawTextEx(font,
+                 label.c_str(),
+                 {left + TAB_LABEL_PADDING, rect.y + TAB_LABEL_PADDING},
+                 tab_fontsize,
+                 3.0f,
+                 WHITE);
+      left += text_size.x + 2.0f * TAB_LABEL_PADDING + TAB_LABEL_MARGIN_LEFT;
+    }
+  }
+
+  void intersecao(Vector2 mouse)
+  {
+    float left = rect.x - scroll + rect.width;
+    for (int i = 0; i < labels.size(); ++i)
+    {
+      std::string &label = labels[i];
+      float tab_fontsize = TAB_LABEL_HEIGHT - 2.0f * TAB_LABEL_PADDING;
+      Vector2 text_size =
+          MeasureTextEx(font, label.c_str(), tab_fontsize, 3.0f);
+      Rectangle tab_rect = {
+          left, rect.y, text_size.x + 2.0f * TAB_LABEL_PADDING, TAB_LABEL_HEIGHT};
+      if (CheckCollisionPointRec(mouse, tab_rect))
+      {
+        selected_tab = i;
+        TraceLog(LOG_INFO, "select_tab = %d", selected_tab);
+        return;
+      }
+      left += text_size.x + 2.0f * TAB_LABEL_PADDING + TAB_LABEL_MARGIN_LEFT;
+    }
+    if (selected_tab >= 0)
+    {
+      tabs[selected_tab].intersecao(mouse);
+    }
+  }
+
+  void add_tab(std::string label)
+  {
+    selected_tab = tabs.size();
+    tabs.emplace_back(
+        rect.x + 20.0f, rect.y + 10.0f + TAB_LABEL_HEIGHT, 500.0f, renderizar);
+    labels.emplace_back(label);
+    float tab_fontsize = TAB_LABEL_HEIGHT - 2.0f * TAB_LABEL_PADDING;
+    Vector2 text_size = MeasureTextEx(font, label.c_str(), tab_fontsize, 3.0f);
+    right += text_size.x + 2.0f * TAB_LABEL_PADDING + TAB_LABEL_MARGIN_LEFT;
+  }
+
+  void add_element_tab(int tab_idx, TextBox &textbox)
+  {
+    tabs[tab_idx].add_element(textbox);
+  }
+
+  void add_element_tab(int tab_idx, Button &button)
+  {
+    tabs[tab_idx].add_element(button);
+  }
+
+  void add_element_tab(int tab_idx, Switch &switch_)
+  {
+    tabs[tab_idx].add_element(switch_);
+  }
+
+  void receber_input(int key, char key_char)
+  {
+    tabs[selected_tab].receber_input(key, key_char);
+  }
+
+  void add_tab_objeto(Objeto *objeto, std::string label)
+  {
+    add_tab(label);
+    tabs[selected_tab].add_object_controls(objeto, label);
+  }
+
+  void add_tab_luz(iluminacao::FontePontual *fonte, std::string label)
+  {
+    add_tab(label);
+    tabs[selected_tab].add_light_controls(fonte, label);
+  }
+  void add_tab_luz(iluminacao::FonteDirecional *fonte, std::string label)
+  {
+    add_tab(label);
+    tabs[selected_tab].add_light_controls(fonte, label);
+  }
+  void add_tab_luz(iluminacao::FonteSpot *fonte, std::string label)
+  {
+    add_tab(label);
+    tabs[selected_tab].add_light_controls(fonte, label);
+  }
+};
+
 // definicao das dimensoes da janela
 const int W_C = 500;
 const int H_C = 500;
@@ -408,21 +925,18 @@ void inicializar_luzes()
 
 int main()
 {
+  // Inicializações básicas
   omp_set_num_threads(8);
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Trabalho Final");
   SetTargetFPS(60);
 
   Font font = GetFontDefault();
+  int objeto_selecionado = -1; // índice do objeto selecionado
 
-  int objeto_selecionado = -1;
-
+  // Carrega a renderização para a cena (lado esquerdo)
   tela = LoadRenderTexture(W_C, H_C);
 
-  Button botaoAtualizar("Atualizar", (Rectangle){10, 10, 120, 40}, []()
-                        {
-    std::cout << "Atualizar cena.\n";
-    renderizar(); });
-
+  // Inicializa os objetos e a iluminação
   inicializar_objetosfinal(objetos, complexObjects);
   for (ObjetoComplexo &objeto_complexo : complexObjects)
   {
@@ -431,48 +945,79 @@ int main()
   std::cout << "Objetos na cena: " << objetos.size() << "\n";
 
   inicializar_luzes();
+
+  // Atualiza a câmera para garantir que os parâmetros estejam corretos
+  camera.updateCoordinates();
+
+  // Renderiza inicialmente a cena
   renderizar();
 
-  // Loop principal simplificado
-  // Loop principal simplificado com zoom via setas
+  // Loop principal
   while (!WindowShouldClose())
   {
-    // Verifica se a tecla de zoom in (seta para cima) foi pressionada
-    if (IsKeyPressed(KEY_UP))
-    {
-      // Calcula um deslocamento (fator de zoom) – ajuste o valor 0.1f conforme necessário
-      Vetor3d dv = (camera.lookAt - camera.position) * 0.1f;
-      camera.position = camera.position + dv;
-      camera.lookAt = camera.lookAt + dv;
-      camera.updateCoordinates();
-      renderizar(); // Atualiza a cena com os novos parâmetros da câmera
-    }
+    // Atualização dos parâmetros da câmera (caso seja necessário, se não houver movimentação da câmera pode ser omitido)
+    Matriz M_cw = camera.getMatrixCameraWorld();
+    Vetor3d PSE = (M_cw * camera.get_PSE().ponto4d()).vetor3d();
+    Vetor3d right = {1.0f, 0.0f, 0.0f};
+    Vetor3d down = {0.0f, -1.0f, 0.0f};
+    Vetor3d forward = camera.get_center().normalizado();
+    right = (M_cw * right.vetor4d()).vetor3d();
+    down = (M_cw * down.vetor4d()).vetor3d();
+    forward = (M_cw * forward.vetor4d()).vetor3d();
 
-    // Verifica se a tecla de zoom out (seta para baixo) foi pressionada
-    if (IsKeyPressed(KEY_DOWN))
-    {
-      Vetor3d dv = (camera.lookAt - camera.position) * 0.1f;
-      camera.position = camera.position - dv;
-      camera.lookAt = camera.lookAt - dv;
-      camera.updateCoordinates();
-      renderizar(); // Atualiza a cena
-    }
+    deltinhax = camera.get_W_J() / nCol;
+    deltinhay = camera.get_H_J() / nLin;
 
-    // Verifica se o botão "Atualizar" foi clicado
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    Vector2 mouse = GetMousePosition();
+
+    // Se o clique estiver na área de renderização (lado esquerdo)
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && mouse.x < W_C && mouse.y < H_C)
     {
-      Vector2 mousePos = GetMousePosition();
-      if (botaoAtualizar.intersecao(mousePos))
+      int x_pos = mouse.x, y_pos = mouse.y;
+      Vetor3d P = PSE + right * (deltinhax * (x_pos + 0.5f)) +
+                  down * (deltinhay * (y_pos + 0.5f));
+      Vetor3d dr = ortografica ? forward : (P - camera.position).normalizado();
+      Raio raio(ortografica ? P : camera.position, dr);
+      auto [t, objeto] = calcular_intersecao(raio, objetos);
+      if (t > 0.0f)
       {
-        botaoAtualizar.action(); // Chama renderizar() via ação do botão
+        objeto_selecionado = objeto;
+        // Aqui você pode adicionar algum log se desejar:
+        TraceLog(LOG_INFO, "Objeto selecionado: %d", objeto_selecionado);
+      }
+    }
+    // Se o clique estiver na área de interface (lado direito)
+    else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && mouse.x >= W_C)
+    {
+      // Definindo a área do botão "Visível"
+      Rectangle buttonRect = {520.0f, 20.0f, 100.0f, 30.0f};
+      if (CheckCollisionPointRec(mouse, buttonRect) && objeto_selecionado >= 0)
+      {
+        // Alterna a visibilidade do objeto selecionado
+        objetos[objeto_selecionado].visivel = !objetos[objeto_selecionado].visivel;
+        TraceLog(LOG_INFO, "Objeto %d visivel: %d", objeto_selecionado, objetos[objeto_selecionado].visivel);
+        renderizar(); // Atualiza a renderização para refletir a mudança
       }
     }
 
+    // Desenho da tela
     BeginDrawing();
     {
       ClearBackground(BACKGROUND_COLOR);
-      DrawTextureRec(tela.texture, (Rectangle){0.0f, 0.0f, W_C, -H_C}, (Vector2){0.0f, 0.0f}, WHITE);
-      botaoAtualizar.desenhar(font);
+      // Desenha a área de interface: botão "Visível" (apenas se houver objeto selecionado)
+      if (objeto_selecionado >= 0)
+      {
+        Rectangle buttonRect = {520.0f, 20.0f, 100.0f, 30.0f};
+        DrawRectangleRec(buttonRect, BUTTON_COLOR);
+        std::string label = "Visivel: ";
+        label += (objetos[objeto_selecionado].visivel ? "ON" : "OFF");
+        Vector2 textSize = MeasureTextEx(font, label.c_str(), 20.0f, 3.0f);
+        Vector2 textPos = {buttonRect.x + (buttonRect.width - textSize.x) / 2,
+                           buttonRect.y + (buttonRect.height - textSize.y) / 2};
+        DrawTextEx(font, label.c_str(), textPos, 20.0f, 3.0f, WHITE);
+      }
+      // Desenha a cena renderizada na área definida (lado esquerdo da janela)
+      DrawTextureRec(tela.texture, {0.0f, 0.0f, (float)W_C, -(float)H_C}, {0.0f, 0.0f}, WHITE);
     }
     EndDrawing();
   }
