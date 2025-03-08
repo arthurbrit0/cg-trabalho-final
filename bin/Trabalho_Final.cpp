@@ -955,7 +955,53 @@ int main()
   // Loop principal
   while (!WindowShouldClose())
   {
-    // Atualização dos parâmetros da câmera (caso seja necessário, se não houver movimentação da câmera pode ser omitido)
+    // Processa o zoom antes do tratamento do mouse e do desenho
+    if (IsKeyPressed(KEY_UP))
+    {
+      if (ortografica)
+      {
+        Vetor3d centro = camera.get_center();
+        float dx = (camera.xmax - centro.x) * 0.10f;
+        float dy = (camera.ymax - centro.y) * 0.10f;
+        camera.xmax -= dx;
+        camera.xmin += dx;
+        camera.ymax -= dy;
+        camera.ymin += dy;
+      }
+      else
+      {
+        // Zoom in: move a câmera mais perto do lookAt
+        Vetor3d dv = (camera.lookAt - camera.position) * 0.10f;
+        camera.position = camera.position + dv;
+        camera.lookAt = camera.lookAt + dv;
+      }
+      camera.updateCoordinates();
+      renderizar();
+    }
+    if (IsKeyPressed(KEY_DOWN))
+    {
+      if (ortografica)
+      {
+        Vetor3d centro = camera.get_center();
+        float dx = (camera.xmax - centro.x) * 0.10f;
+        float dy = (camera.ymax - centro.y) * 0.10f;
+        camera.xmax += dx;
+        camera.xmin -= dx;
+        camera.ymax += dy;
+        camera.ymin -= dy;
+      }
+      else
+      {
+        // Zoom out: afasta a câmera do lookAt
+        Vetor3d dv = (camera.lookAt - camera.position) * 0.10f;
+        camera.position = camera.position - dv;
+        camera.lookAt = camera.lookAt - dv;
+      }
+      camera.updateCoordinates();
+      renderizar();
+    }
+
+    // Atualização dos parâmetros da câmera para a renderização
     Matriz M_cw = camera.getMatrixCameraWorld();
     Vetor3d PSE = (M_cw * camera.get_PSE().ponto4d()).vetor3d();
     Vetor3d right = {1.0f, 0.0f, 0.0f};
@@ -964,13 +1010,12 @@ int main()
     right = (M_cw * right.vetor4d()).vetor3d();
     down = (M_cw * down.vetor4d()).vetor3d();
     forward = (M_cw * forward.vetor4d()).vetor3d();
-
     deltinhax = camera.get_W_J() / nCol;
     deltinhay = camera.get_H_J() / nLin;
 
     Vector2 mouse = GetMousePosition();
 
-    // Se o clique estiver na área de renderização (lado esquerdo)
+    // Processa seleção de objeto na área de renderização (lado esquerdo)
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && mouse.x < W_C && mouse.y < H_C)
     {
       int x_pos = mouse.x, y_pos = mouse.y;
@@ -982,29 +1027,24 @@ int main()
       if (t > 0.0f)
       {
         objeto_selecionado = objeto;
-        // Aqui você pode adicionar algum log se desejar:
         TraceLog(LOG_INFO, "Objeto selecionado: %d", objeto_selecionado);
       }
     }
-    // Se o clique estiver na área de interface (lado direito)
+    // Processa clique na área de interface para alternar o "Visível"
     else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && mouse.x >= W_C)
     {
-      // Definindo a área do botão "Visível"
       Rectangle buttonRect = {520.0f, 20.0f, 100.0f, 30.0f};
       if (CheckCollisionPointRec(mouse, buttonRect) && objeto_selecionado >= 0)
       {
-        // Alterna a visibilidade do objeto selecionado
         objetos[objeto_selecionado].visivel = !objetos[objeto_selecionado].visivel;
         TraceLog(LOG_INFO, "Objeto %d visivel: %d", objeto_selecionado, objetos[objeto_selecionado].visivel);
-        renderizar(); // Atualiza a renderização para refletir a mudança
+        renderizar();
       }
     }
 
-    // Desenho da tela
     BeginDrawing();
     {
       ClearBackground(BACKGROUND_COLOR);
-      // Desenha a área de interface: botão "Visível" (apenas se houver objeto selecionado)
       if (objeto_selecionado >= 0)
       {
         Rectangle buttonRect = {520.0f, 20.0f, 100.0f, 30.0f};
@@ -1016,7 +1056,6 @@ int main()
                            buttonRect.y + (buttonRect.height - textSize.y) / 2};
         DrawTextEx(font, label.c_str(), textPos, 20.0f, 3.0f, WHITE);
       }
-      // Desenha a cena renderizada na área definida (lado esquerdo da janela)
       DrawTextureRec(tela.texture, {0.0f, 0.0f, (float)W_C, -(float)H_C}, {0.0f, 0.0f}, WHITE);
     }
     EndDrawing();
