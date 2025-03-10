@@ -93,7 +93,7 @@ void inicializar_objetosfinal(std::vector<Objeto>& objects_flat,
     casa.adicionar_objeto(corpo);
 
     // Telhado (cone) menor
-    Cone telhado({ posX, 140.0f, posZ },
+    Cone telhado({ posX, 120.0f, posZ },
                  120.0f,
                  120.0f,
                  { 0, 1, 0 },
