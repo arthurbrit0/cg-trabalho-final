@@ -92,12 +92,11 @@ void inicializar_objetosfinal(std::vector<Objeto>& objects_flat,
                       Matriz::escala({ 150.0f, 250.0f, 150.0f }));
     casa.adicionar_objeto(corpo);
 
-    // Telhado (cone) menor, para não parecer flutuando
-    // Raio=70, Altura=70, base em y=250
-    Cone telhado({ posX, 140.0f, posZ },  // base do cone
-                 120.0f,                   // raio
-                 120.0f,                   // altura
-                 { 0, 1, 0 },             // direcao
+    // Telhado (cone) menor
+    Cone telhado({ posX, 140.0f, posZ },
+                 120.0f,
+                 120.0f,
+                 { 0, 1, 0 },
                  corTelhado, corTelhado, { 0.1f, 0.1f, 0.1f },
                  32.0f);
     casa.adicionar_objeto(telhado);
@@ -105,19 +104,23 @@ void inicializar_objetosfinal(std::vector<Objeto>& objects_flat,
     return casa;
   };
 
-  // 4) CASAS: duas filas, à esquerda (x ~ -700) e à direita (x ~ +700), ao longo do z
+  // 4) CASAS: duas filas
   for (int i = 0; i < 3; i++) {
     float zPos = -1500.0f + i * 800.0f;
-    // Casa à esquerda
-    ObjetoComplexo casaEsq = criarCasa(-700.0f, zPos, {0.8f, 0.85f, 0.9f}, {0.2f, 0.2f, 0.8f});
+    // Casa esquerda
+    ObjetoComplexo casaEsq = criarCasa(-700.0f, zPos,
+                                       {0.8f, 0.85f, 0.9f},
+                                       {0.2f, 0.2f, 0.8f});
     complexObjects.push_back(casaEsq);
-    // Casa à direita
-    ObjetoComplexo casaDir = criarCasa(700.0f, zPos, {0.95f, 0.9f, 0.8f}, {0.9f, 0.5f, 0.2f});
+    // Casa direita
+    ObjetoComplexo casaDir = criarCasa(700.0f, zPos,
+                                       {0.95f, 0.9f, 0.8f},
+                                       {0.9f, 0.5f, 0.2f});
     complexObjects.push_back(casaDir);
   }
   std::cout << "Casas alinhadas inicializadas.\n";
 
-  // 5) POSTES: dispostos entre as casas e a rua (ex.: x ~ ±300)
+  // 5) POSTES
   auto criarPoste = [&](float x, float z) -> ObjetoComplexo {
     ObjetoComplexo poste;
     Cilindro base(
@@ -147,21 +150,18 @@ void inicializar_objetosfinal(std::vector<Objeto>& objects_flat,
 
   for (int i = 0; i < 5; i++) {
     float zPos = -1500.0f + i * 600.0f;
-    // Poste à esquerda (x=-300)
+    // Poste esq
     complexObjects.push_back(criarPoste(-300.0f, zPos));
-    // Poste à direita (x=+300)
+    // Poste dir
     complexObjects.push_back(criarPoste(300.0f, zPos));
   }
   std::cout << "Postes alinhados inicializados.\n";
 
-    // 6) ÁRVORES COM MAÇÃS (x=±400)
+  // 6) ÁRVORES COM MAÇÃS
   auto criarArvore = [&](float x, float z) -> ObjetoComplexo {
     ObjetoComplexo arvore;
     // Tronco
-    Cilindro tronco({ x, 0.0f, z },
-                    5.0f,
-                    120.0f,
-                    { 0,1,0 },
+    Cilindro tronco({ x, 0.0f, z }, 5.0f, 120.0f, {0,1,0},
                     { 0.5f, 0.25f, 0.1f },
                     { 0.5f, 0.25f, 0.1f },
                     { 0.1f, 0.1f, 0.1f },
@@ -169,62 +169,55 @@ void inicializar_objetosfinal(std::vector<Objeto>& objects_flat,
     arvore.adicionar_objeto(tronco);
 
     // Copa
-    Cone copa({ x, 120.0f, z },
-              70.0f,
-              100.0f,
-              { 0,1,0 },
-              { 0.0f, 0.6f, 0.0f },
-              { 0.0f, 0.6f, 0.0f },
-              { 0.1f, 0.1f, 0.1f },
+    Cone copa({ x, 120.0f, z }, 70.0f, 100.0f, {0,1,0},
+              {0.0f, 0.6f, 0.0f},
+              {0.0f, 0.6f, 0.0f},
+              {0.1f, 0.1f, 0.1f},
               16.0f);
     arvore.adicionar_objeto(copa);
 
-    // Maçãs – 3 esferas vermelhas, maiores e mais afastadas
+    // Maçãs
     for (int i = 0; i < 3; i++) {
-      float offsetX = (i - 1) * 20.0f;  // -15, 0, +15
+      float offsetX = (i - 1)*20.0f;
       float offsetZ = (i == 1) ? 0.0f : (i == 0 ? 20.0f : -20.0f);
-      float offsetY = 180.0f + i * 10.0f; // 150,160,170
+      float offsetY = 180.0f + i*10.0f;
 
-      Esfera maca({ x + offsetX, offsetY, z + offsetZ },
-                  15.0f, // raio maior
-                  { 1.0f, 0.0f, 0.0f }, // vermelho
-                  { 1.0f, 1.0f, 1.0f },
-                  { 0.1f, 0.1f, 0.1f },
+      Esfera maca({ x+offsetX, offsetY, z+offsetZ },
+                  15.0f,
+                  {1.0f, 0.0f, 0.0f},
+                  {1.0f, 1.0f, 1.0f},
+                  {0.1f, 0.1f, 0.1f},
                   16.0f);
       arvore.adicionar_objeto(maca);
     }
     return arvore;
   };
 
-
   for (int i = 0; i < 5; i++) {
     float zPos = -1300.0f + i * 500.0f;
-    // Árvores à esquerda (x=-400) e direita (x=+400)
     complexObjects.push_back(criarArvore(-400.0f, zPos));
     complexObjects.push_back(criarArvore( 400.0f, zPos));
   }
   std::cout << "Árvores alinhadas inicializadas.\n";
   std::cout << "\nCena 'Rua Comercial Vista de Perfil' ajustada com sucesso!\n";
 
- // 10) Faixa amarela tracejada no centro da rua
+  // 10) Faixa amarela tracejada
   {
-    // Função lambda para criar um retângulo amarelo (Malha) representando um traço
     auto criarTraco = [&](float z) -> ObjetoComplexo {
       ObjetoComplexo traco;
       Malha dash;
       dash.inicializar_cubo({ 0, 0, 0 }, 1.0f,
-                            { 1.0f, 1.0f, 0.0f }, // amarelo
+                            { 1.0f, 1.0f, 0.0f },
                             { 1.0f, 1.0f, 0.0f },
                             { 1.0f, 1.0f, 0.0f },
                             32.0f);
-      // Cada traço: 50 de comprimento no eixo z, 5 de largura no eixo x, 1 de altura
+      // 50 comp x 5 larg x 1 alt => no transform adaptado
       dash.transformar(Matriz::translacao({ 0.0f, 5.5f, z }) *
                        Matriz::escala({ 50.0f, 1.0f, 120.0f }));
       traco.adicionar_objeto(dash);
       return traco;
     };
 
-    // Cria ~10 traços distribuídos ao longo do z
     for (int i = 0; i < 10; i++) {
       float zPos = -2000.0f + i * 400.0f;
       complexObjects.push_back(criarTraco(zPos));
@@ -233,5 +226,3 @@ void inicializar_objetosfinal(std::vector<Objeto>& objects_flat,
   }
 
 }
-
-

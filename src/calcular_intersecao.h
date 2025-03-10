@@ -4,8 +4,10 @@
 #include "./Objeto/Objeto.h"
 #include "./Raio/Raio.h"
 #include <vector>
+#include <utility>
 
-std::pair<float, int>
-calcular_intersecao(Raio& raio, std::vector<Objeto>& objetos, int excluir = -1);
+std::pair<float,int> calcular_intersecao(Raio &raio,
+                                         std::vector<Objeto> &objetos,
+                                         int excluir = -1);
 
 #endif

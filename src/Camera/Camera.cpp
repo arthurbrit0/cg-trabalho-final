@@ -1,4 +1,3 @@
-
 #include "Camera3de.h"
 using namespace funcoes_auxiliares;
 
@@ -35,26 +34,23 @@ Camera3de::Camera3de(Vetor3d position, Vetor3d lookAt, Vetor3d Up)
   updateCoordinates();
 }
 
-void
-Camera3de::updateCoordinates()
+void Camera3de::updateCoordinates()
 {
-  // Calcula o vetor k (direção para trás)
+  // Calcula k
   k = (position - lookAt).normalizado();
 
-  // Calcula o vetor i (horizontal)
+  // Calcula i (horizontal)
   Vetor3d viewUp = Up - position;
   i = viewUp.cross_product(k).normalizado();
 
-  // Calcula o vetor j (vertical)
+  // Calcula j
   j = k.cross_product(i);
 }
 
-Matriz
-Camera3de::getTransformationMatrix()
+Matriz Camera3de::getTransformationMatrix()
 {
   Matriz viewMatrix = Matriz::identidade(4);
 
-  // Preenche a matriz com os vetores i, j, k e a posição da câmera
   viewMatrix.data[0][0] = i.x;
   viewMatrix.data[0][1] = i.y;
   viewMatrix.data[0][2] = i.z;
@@ -73,12 +69,10 @@ Camera3de::getTransformationMatrix()
   return viewMatrix;
 }
 
-Matriz
-Camera3de::getMatrixCameraWorld()
+Matriz Camera3de::getMatrixCameraWorld()
 {
   Matriz viewMatrix = Matriz::identidade(4);
 
-  // Preenche a matriz com os vetores i, j, k e a posição da câmera
   viewMatrix.data[0][0] = i.x;
   viewMatrix.data[0][1] = j.x;
   viewMatrix.data[0][2] = k.x;
@@ -97,26 +91,22 @@ Camera3de::getMatrixCameraWorld()
   return viewMatrix;
 }
 
-Vetor3d
-Camera3de::get_PSE()
+Vetor3d Camera3de::get_PSE()
 {
   return { xmin, ymax, -d };
 }
 
-Vetor3d
-Camera3de::get_center()
+Vetor3d Camera3de::get_center()
 {
-  return { 0.5f * (xmax + xmin), 0.5f * (ymax + ymin), -d };
+  return { 0.5f*(xmax + xmin), 0.5f*(ymax + ymin), -d };
 }
 
-float
-Camera3de::get_H_J()
+float Camera3de::get_H_J()
 {
   return ymax - ymin;
 }
 
-float
-Camera3de::get_W_J()
+float Camera3de::get_W_J()
 {
   return xmax - xmin;
 }
